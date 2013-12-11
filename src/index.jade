@@ -1,0 +1,326 @@
+!!! 5
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Crypton
+
+    //- Check out 'src/bower_components/prism/themes/' for available themes
+    link(rel='stylesheet', type='text/css', href='bower_components/prism/themes/prism-tomorrow.css')
+
+    link(rel='stylesheet', type='text/css', href='styles/main.css')
+
+  body
+
+    article
+
+      section(data-bespoke-hash='intro')
+        h1.orange Crypton
+        h3 Giving privacy to the internet
+        h3
+          a(href='http://crypton.io') http://crypton.io
+
+      section(data-bespoke-hash='who-am-i')
+          hr
+          h2 WHO 
+            span.orange AM 
+            span.white I ?
+          h3 Tommy-Carlos Williams 
+          hr
+          h3
+            a(href='mailto:tommy@devgeeks.org') tommy@devgeeks.org
+          h3
+            a(href='http://twitter.com/theRealDevgeeks') @theRealDevgeeks
+          hr
+          h3
+            a(href='http://blog.devgeeks.org') http://blog.devgeeks.org
+          h3
+            a(href='http://github.com/devgeeks') http://github.com/devgeeks
+
+      section(data-bespoke-hash='what-is-crypton')
+        h2 What 
+          span.orange is 
+          span.white Crypton?
+        h3 Zero-Knowledge framework for JavaScript
+        h3
+          a(href='https://github.com/spideroak/crypton/') https://github.com/spideroak/crypton/
+        hr.bullet
+        ul
+          li Easily build cryptographically secure cloud applications
+          li Open Source (GPLv3, commercial licenses available)
+          li <br>“No Novel Cryptography”  <br> Based on 
+            a(href='http://bitwiseshiftleft.github.io/sjcl/') Stanford JavaScript Crypto Library
+            <br> 
+            small Already developed, strong cryptography put together by career cryptographers
+          li <br> Works with your favourite JS frameworks
+
+      section(data-bespoke-hash='zero-knowledge')
+        h1.orange Zero-Knowledge
+        h3 Server is unaware of the contents it is storing
+        h3 Done through the use of Cryptography
+
+      section(data-bespoke-hash='privacy-aware')
+        h2 More 
+          span.orange users 
+          span.white are becoming 
+          span.orange "privacy aware."
+        hr 
+        h3.bullet  Terrabytes of data being transferred over the internet
+        ul
+          li Credit card numbers, passwords, and other sensitive data
+          li All waiting to be 
+            span.orange intercepted
+            span.white , 
+            span.orange attacked 
+            span.white or 
+            span.orange stolen
+
+      section(data-bespoke-hash='what-can-you-store')
+        h2 What can you 
+          span.orange store 
+          span.white with 
+          span.orange Crypton?
+        hr
+        h3 Containers
+        p JavaScript objects and primitives
+        hr
+        h3 Messages
+        p Secure messaging
+          small <br>(Allows user account to request to add a message to the "inbox" of another user account)
+
+      section(data-bespoke-hash='architecture')
+        h1.orange Architecture
+        img(src="img/crypton-architecture.png", width="80%")
+
+      section(data-bespoke-hash='caveat')
+        h2.orange First
+          span.white , a caveat / warning
+        h3 
+          span Crypton is a 
+          b.orange pre-release 
+          span project at v0.0.1
+        hr
+        blockquote It has not been through a first round of refactoring, general code cleanup, and 
+          span.orange security review
+        hr
+        blockquote All of these things will change in the versions between v0.0.1 and v0.1.0, at which point we'll make a first stable release that we encourage for production and commercial uses
+
+      section(data-bespoke-hash='let-us-code')
+        h2.orange With that out of the way,
+        h3 Let's code...
+        code.language-html
+          pre.
+            <script src="crypton.js"></script>
+
+
+      section(data-bespoke-hash='accounts')
+        h2.orange Accounts
+        h3 Creating an account
+        pre crypton.generateAcount(username, passphrase, callback)
+        hr
+        code.language-javascript
+          pre.
+            crypton.host = "localhost";
+            var myApp = {};
+            var username = 'testuser';
+            var passPhrase = 'pass1234';
+
+            crypton.generateAccount(username, passPhrase, function(err, account) {
+              if (err) {
+                // Inform the user, adjust application flow.
+                alert(err);
+                return;
+              }
+              // Do something with the returned account, if needed
+              myApp.account = account;
+            });
+
+      section(data-bespoke-hash='auth')
+        h2.orange Authorisation
+        h3 Authenticating with the server
+        p Zero-knowledge proof
+        pre crypton.authorize(username, passphrase, callback)
+        hr
+        code.language-javascript
+          pre.
+            crypton.authorize(username, passPhrase, function(err, session) {
+              if (err) {
+                alert(err);
+                return;
+              }
+              // Store the authenticated session somewhere
+              // necessary for requesting and receiving data
+              myApp.session = session;
+            });
+
+      section(data-bespoke-hash='containers')
+        h2.orange Containers
+        h3 Data in Crypton is treated as a traditional object database.
+        hr.bullet
+        ul 
+          li Containers are append-only stores that are transparently encrypted / decrypted on the client side.
+          li Identified by keys such as "diary"
+          li From the server's perspective, container names <br>(and of course their contents) <br>are unreadable
+
+      section(data-bespoke-hash='creating-a-container')
+        h2.orange Creating 
+          span.white a container
+        pre session.create(containerName, callback)
+        hr
+        code.language-javascript
+          pre.
+            myApp.session.create("diary", function(err, container) {
+              if (err) {
+                alert(err);
+                return;
+              }
+              // `container` is the new container ready to use
+              myApp.diary = container;
+              // Do something with the container
+            });
+
+      section(data-bespoke-hash='loading-a-container')
+        h2.orange Loading  
+          span.white a container
+        pre session.load(containerName, callback)
+        hr
+        code.language-javascript
+          pre.
+            // Existing container, not yet loaded
+            myApp.session.load("diary", function(err, container) {
+              if (err) {
+                alert(err);
+                return;
+              }
+              // Do something with the container
+              myApp.diary = container;
+            });
+
+
+        p.orange session.load 
+          small.white <br>Will callback with an error if the given containerName does not exist. 
+        hr
+        p.orange session.create 
+          small.white <br>Will create a blank container and save its initial state to the server.
+      
+      section(data-bespoke-hash='adding-to-a-container')
+        h2.orange Adding 
+          span.white to a container
+        pre container.add(key, callback)
+        hr
+        code.language-javascript
+          pre.
+            myApp.diary.add('entries', function (err) {
+              if (err) {
+                alert(err);
+                return;
+              }
+              // diary now has an entries object
+            });
+
+        hr
+        p
+          small Will callback with an error if "entries" already exists.
+
+      section(data-bespoke-hash='accessing-container-objects')
+        h2 Accessing container 
+          span.orange objects
+        pre container.get(key, callback)
+        hr
+        code.language-javascript
+          pre.
+            // Wrapping in an `add` saves an error check below
+            myApp.diary.add('entries', function () {
+              // worst case scenario: key already exists 
+              //    and will not be overwritten
+              myApp.diary.get('entries', function (err, entries) {
+                if (err) {
+                  alert(err);
+                  return;
+                }
+                myApp.entries = entries;
+              });
+            });
+
+      section(data-bespoke-hash='adding-data-and-saving')
+        h2 Adding data 
+          span.orange and saving it
+        pre container.save(callback)
+        hr
+        code.language-javascript
+          pre.
+            var id = "entry-"+Date.now();
+            var newEntry = {
+              id: id,
+              title: 'Tonight I used crypto, and I LIKED IT!'
+            };
+
+            myApp.entries[id] = newEntry;
+            myApp.diary.save(function (err) {
+              if (err) {
+                // alert the user
+                return;
+              }
+              // update UI, etc
+            });
+
+      section(data-bespoke-hash='getting-it-back')
+        h2 Getting it 
+          span.orange back
+        pre container.get(key, callback)
+        p
+          small ...more of the same
+        code.language-javascript
+          pre.
+            myApp.diary.get('entries', function(err, entries) {
+              if (err) {
+                alert(err);
+                return;
+              }
+              myApp.entries = entries;
+              myApp.allEntries = 
+                _.map(myApp.entries, function(entry, key){ return entry; });
+              console.log(myApp.allEntries);
+            });
+
+      section(data-bespoke-hash='bonus-points')
+        h2.orange Bonus 
+          span.white points
+        hr
+        h3 For extra credit integrate with your favourite MVC framework
+        p.orange In my case, Backbone.js
+        ul
+          li Override 
+            pre.orange Backbone.sync()
+            span and 
+            pre.orange Backbone.Collections.fetch()
+
+
+
+      section(data-bespoke-hash='thanks')
+        h1.orange Thanks!
+        hr
+        h3 Feel free to ask me any SpiderOak / Crypton questions you may have as long as they have nothing to do with the actual Cryptography.
+        hr
+        hr
+        h3 Just kidding. *
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        hr
+        p * I'm totally not kidding...
+
+
+    script(src='bower_components/bespoke.js/dist/bespoke.min.js')
+    script(src='bower_components/bespoke-bullets/dist/bespoke-bullets.min.js')
+    script(src='bower_components/bespoke-scale/dist/bespoke-scale.min.js')
+    script(src='bower_components/bespoke-hash/dist/bespoke-hash.min.js')
+    script(src='bower_components/prism/prism.js')
+    script(src='scripts/main.js')
