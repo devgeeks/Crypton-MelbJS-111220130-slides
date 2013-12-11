@@ -1,8 +1,10 @@
 # Crypton
 
-## Giving privacy to the internet
+### Giving privacy to the internet
 
-### Slides for my talk on Crypton (http://crypton.io) at MelbJS, Dec 2013
+**Slides for my talk on Crypton (http://crypton.io) at MelbJS, Dec 2013**
+
+Available to view at: [http://devgeeks.github.io/Crypton-MelbJS-111220130-slides/](http://devgeeks.github.io/Crypton-MelbJS-111220130-slides/)
 
 > A [Bespoke.js](http://markdalgleish.com/projects/bespoke.js) presentation, built with [generator-bespoke](https://github.com/markdalgleish/generator-bespoke)
 
