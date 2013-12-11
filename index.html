@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Crypton</title><link rel="stylesheet" type="text/css" href="bower_components/prism/themes/prism-tomorrow.css"><link rel="stylesheet" type="text/css" href="styles/main.css"></head><body><article><section data-bespoke-hash="intro"><h1 class="orange">Crypton</h1><h3>Giving privacy to the internet</h3><h3><a href="http://crypton.io">http://crypton.io</a></h3></section><section data-bespoke-hash="who-am-i"><hr><h2>WHO <span class="orange">AM </span><span class="white">I ?</span></h2><h3>Tommy-Carlos Williams </h3><hr><h3><a href="mailto:tommy@devgeeks.org">tommy@devgeeks.org</a></h3><h3><a href="http://twitter.com/theRealDevgeeks">@theRealDevgeeks</a></h3><hr><h3><a href="http://blog.devgeeks.org">http://blog.devgeeks.org</a></h3><h3><a href="http://github.com/devgeeks">http://github.com/devgeeks</a></h3></section><section data-bespoke-hash="what-is-crypton"><h2>What <span class="orange">is </span><span class="white">Crypton?</span></h2><h3>Zero-Knowledge framework for JavaScript</h3><h3><a href="https://github.com/spideroak/crypton/">https://github.com/spideroak/crypton/</a></h3><hr class="bullet"><ul><li>Easily build cryptographically secure cloud applications</li><li>Open Source (GPLv3, commercial licenses available)</li><li><br>“No Novel Cryptography”  <br> Based on <a href="http://bitwiseshiftleft.github.io/sjcl/">Stanford JavaScript Crypto Library</a><br> <small>Already developed, strong cryptography put together by career cryptographers</small></li><li><br> Works with your favourite JS frameworks</li></ul></section><section data-bespoke-hash="zero-knowledge"><h1 class="orange">Zero-Knowledge</h1><h3>Server is unaware of the contents it is storing</h3><h3>Done through the use of Cryptography</h3></section><section data-bespoke-hash="privacy-aware"><h2>More <span class="orange">users </span><span class="white">are becoming </span><span class="orange">"privacy aware."</span></h2><hr><h3 class="bullet"> Terrabytes of data being transferred over the internet</h3><ul><li>Credit card numbers, passwords, and other sensitive data</li><li>All waiting to be <span class="orange">intercepted</span><span class="white">, </span><span class="orange">attacked </span><span class="white">or </span><span class="orange">stolen</span></li></ul></section><section data-bespoke-hash="what-can-you-store"><h2>What can you <span class="orange">store </span><span class="white">with </span><span class="orange">Crypton?</span></h2><hr><h3>Containers</h3><p>JavaScript objects and primitives</p><hr><h3>Messages</h3><p>Secure messaging<small><br>(Allows user account to request to add a message to the "inbox" of another user account)</small></p></section><section data-bespoke-hash="architecture"><h1 class="orange">Architecture</h1><img src="img/crypton-architecture.png" width="80%"></section><section data-bespoke-hash="caveat"><h2 class="orange">First<span class="white">, a caveat / warning</span></h2><h3> <span>Crypton is a </span><b class="orange">pre-release </b><span>project at v0.0.1</span></h3><hr><blockquote>It has not been through a first round of refactoring, general code cleanup, and <span class="orange">security review</span></blockquote><hr><blockquote>All of these things will change in the versions between v0.0.1 and v0.1.0, at which point we'll make a first stable release that we encourage for production and commercial uses</blockquote></section><section data-bespoke-hash="let-us-code"><h2 class="orange">With that out of the way,</h2><h3>Let's code...</h3><code class="language-html"><pre>&lt;script src=&quot;crypton.js&quot;&gt;&lt;/script&gt;
+
+</pre></code></section><section data-bespoke-hash="accounts"><h2 class="orange">Accounts</h2><h3>Creating an account</h3><pre>crypton.generateAcount(username, passphrase, callback)</pre><hr><code class="language-javascript"><pre>crypton.host = &quot;localhost&quot;;
+var myApp = {};
+var username = 'testuser';
+var passPhrase = 'pass1234';
+
+crypton.generateAccount(username, passPhrase, function(err, account) {
+  if (err) {
+    // Inform the user, adjust application flow.
+    alert(err);
+    return;
+  }
+  // Do something with the returned account, if needed
+  myApp.account = account;
+});
+</pre></code></section><section data-bespoke-hash="auth"><h2 class="orange">Authorisation</h2><h3>Authenticating with the server</h3><p>Zero-knowledge proof</p><pre>crypton.authorize(username, passphrase, callback)</pre><hr><code class="language-javascript"><pre>crypton.authorize(username, passPhrase, function(err, session) {
+  if (err) {
+    alert(err);
+    return;
+  }
+  // Store the authenticated session somewhere
+  // necessary for requesting and receiving data
+  myApp.session = session;
+});
+</pre></code></section><section data-bespoke-hash="containers"><h2 class="orange">Containers</h2><h3>Data in Crypton is treated as a traditional object database.</h3><hr class="bullet"><ul> <li>Containers are append-only stores that are transparently encrypted / decrypted on the client side.</li><li>Identified by keys such as "diary"</li><li>From the server's perspective, container names <br>(and of course their contents) <br>are unreadable</li></ul></section><section data-bespoke-hash="creating-a-container"><h2 class="orange">Creating <span class="white">a container</span></h2><pre>session.create(containerName, callback)</pre><hr><code class="language-javascript"><pre>myApp.session.create(&quot;diary&quot;, function(err, container) {
+  if (err) {
+    alert(err);
+    return;
+  }
+  // `container` is the new container ready to use
+  myApp.diary = container;
+  // Do something with the container
+});
+</pre></code></section><section data-bespoke-hash="loading-a-container"><h2 class="orange">Loading  <span class="white">a container</span></h2><pre>session.load(containerName, callback)</pre><hr><code class="language-javascript"><pre>// Existing container, not yet loaded
+myApp.session.load(&quot;diary&quot;, function(err, container) {
+  if (err) {
+    alert(err);
+    return;
+  }
+  // Do something with the container
+  myApp.diary = container;
+});
+
+</pre></code><p class="orange">session.load <small class="white"><br>Will callback with an error if the given containerName does not exist. </small></p><hr><p class="orange">session.create <small class="white"><br>Will create a blank container and save its initial state to the server.</small></p></section><section data-bespoke-hash="adding-to-a-container"><h2 class="orange">Adding <span class="white">to a container</span></h2><pre>container.add(key, callback)</pre><hr><code class="language-javascript"><pre>myApp.diary.add('entries', function (err) {
+  if (err) {
+    alert(err);
+    return;
+  }
+  // diary now has an entries object
+});
+</pre></code><hr><p><small>Will callback with an error if "entries" already exists.</small></p></section><section data-bespoke-hash="accessing-container-objects"><h2>Accessing container <span class="orange">objects</span></h2><pre>container.get(key, callback)</pre><hr><code class="language-javascript"><pre>// Wrapping in an `add` saves an error check below
+myApp.diary.add('entries', function () {
+  // worst case scenario: key already exists 
+  //    and will not be overwritten
+  myApp.diary.get('entries', function (err, entries) {
+    if (err) {
+      alert(err);
+      return;
+    }
+    myApp.entries = entries;
+  });
+});
+</pre></code></section><section data-bespoke-hash="adding-data-and-saving"><h2>Adding data <span class="orange">and saving it</span></h2><pre>container.save(callback)</pre><hr><code class="language-javascript"><pre>var id = &quot;entry-&quot;+Date.now();
+var newEntry = {
+  id: id,
+  title: 'Tonight I used crypto, and I LIKED IT!'
+};
+
+myApp.entries[id] = newEntry;
+myApp.diary.save(function (err) {
+  if (err) {
+    // alert the user
+    return;
+  }
+  // update UI, etc
+});
+</pre></code></section><section data-bespoke-hash="getting-it-back"><h2>Getting it <span class="orange">back</span></h2><pre>container.get(key, callback)</pre><p><small>...more of the same</small></p><code class="language-javascript"><pre>myApp.diary.get('entries', function(err, entries) {
+  if (err) {
+    alert(err);
+    return;
+  }
+  myApp.entries = entries;
+  myApp.allEntries = 
+    _.map(myApp.entries, function(entry, key){ return entry; });
+  console.log(myApp.allEntries);
+});
+</pre></code></section><section data-bespoke-hash="bonus-points"><h2 class="orange">Bonus <span class="white">points</span></h2><hr><h3>For extra credit integrate with your favourite MVC framework</h3><p class="orange">In my case, Backbone.js</p><ul><li>Override <pre class="orange">Backbone.sync()</pre><span>and </span><pre class="orange">Backbone.Collections.fetch()</pre></li></ul></section><section data-bespoke-hash="thanks"><h1 class="orange">Thanks!</h1><hr><h3>Feel free to ask me any SpiderOak / Crypton questions you may have as long as they have nothing to do with the actual Cryptography.</h3><hr><hr><h3>Just kidding. *</h3><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><hr><p>* I'm totally not kidding...</p></section></article><script src="bower_components/bespoke.js/dist/bespoke.min.js"></script><script src="bower_components/bespoke-bullets/dist/bespoke-bullets.min.js"></script><script src="bower_components/bespoke-scale/dist/bespoke-scale.min.js"></script><script src="bower_components/bespoke-hash/dist/bespoke-hash.min.js"></script><script src="bower_components/prism/prism.js"></script><script src="scripts/main.js"></script></body></html>
