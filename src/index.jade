@@ -37,6 +37,16 @@ html
           h3
             a(href='http://github.com/devgeeks') http://github.com/devgeeks
 
+      section(data-bespoke-hash='trigger-warning')
+        h1.orange Trigger  
+          span.white Warning
+        hr
+        hr
+        h3.orange Cryptography  
+          span.white and  
+          span.orange JavaScript  
+          span.white content
+
       section(data-bespoke-hash='what-is-crypton')
         h2 What 
           span.orange is 
@@ -47,7 +57,7 @@ html
         hr.bullet
         ul
           li Easily build cryptographically secure cloud applications
-          li Open Source (GPLv3, commercial licenses available)
+          li Open Source (Currently AGPLv3, commercial licenses available)
           li <br>“No Novel Cryptography”  <br> Based on 
             a(href='http://bitwiseshiftleft.github.io/sjcl/') Stanford JavaScript Crypto Library
             <br> 
@@ -57,7 +67,7 @@ html
       section(data-bespoke-hash='zero-knowledge')
         h1.orange Zero-Knowledge
         h3 Server is unaware of the contents it is storing
-        h3 Done through the use of Cryptography
+        h3 Done through the use of end to end Cryptography
 
       section(data-bespoke-hash='privacy-aware')
         h2 More 
@@ -67,7 +77,7 @@ html
         hr 
         h3.bullet  Terrabytes of data being transferred over the internet
         ul
-          li Credit card numbers, passwords, and other sensitive data
+          li Personal information, credit card numbers, passwords, and other sensitive data
           li All waiting to be 
             span.orange intercepted
             span.white , 
@@ -92,18 +102,31 @@ html
         h1.orange Architecture
         img(src="img/crypton-architecture.png", width="80%")
 
-      section(data-bespoke-hash='caveat')
-        h2.orange First
-          span.white , a caveat / warning
+      section(data-bespoke-hash='auditing')
+        h2.orange Security 
+          span.white audits and readiness
         h3 
           span Crypton is a 
           b.orange pre-release 
-          span project at v0.0.1
+          span project at v0.0.2
         hr
-        blockquote It has not been through a first round of refactoring, general code cleanup, and 
-          span.orange security review
+        blockquote However, as of April, 2014 there have been 2 audits. The first one was completed by 
+          span.orange Least Authority 
+          span.white and the second by 
+          span.orange Leviathan
+          span.white .
         hr
-        blockquote All of these things will change in the versions between v0.0.1 and v0.1.0, at which point we'll make a first stable release that we encourage for production and commercial uses
+        blockquote Crypton 
+          span.orange is ready for use 
+          span.white inside JavaScript runtimes that have solved the '
+          span.orange Code Delivery Problem
+          span.white ', or where the client API is packaged and not downloaded each time the application is run.
+        hr.bullet
+        ul
+          li PhoneGap / Cordova
+          li iOS &amp; Android WebViews
+          li Browser extensions
+          li Packaged apps
 
       section(data-bespoke-hash='let-us-code')
         h2.orange With that out of the way,
@@ -120,12 +143,12 @@ html
         hr
         code.language-javascript
           pre.
-            crypton.host = "localhost";
+            crypton.host = "crypton.devgeeks.org";
             var myApp = {};
             var username = 'testuser';
-            var passPhrase = 'pass1234';
+            var passphrase = 'pass1234';
 
-            crypton.generateAccount(username, passPhrase, function(err, account) {
+            crypton.generateAccount(username, passphrase, function(err, account) {
               if (err) {
                 // Inform the user, adjust application flow.
                 alert(err);
@@ -143,7 +166,7 @@ html
         hr
         code.language-javascript
           pre.
-            crypton.authorize(username, passPhrase, function(err, session) {
+            crypton.authorize(username, passphrase, function(err, session) {
               if (err) {
                 alert(err);
                 return;
@@ -159,7 +182,7 @@ html
         hr.bullet
         ul 
           li Containers are append-only stores that are transparently encrypted / decrypted on the client side.
-          li Identified by keys such as "diary"
+          li Identified by keys such as "diary", "201407020903", or generated UUIDs
           li From the server's perspective, container names <br>(and of course their contents) <br>are unreadable
 
       section(data-bespoke-hash='creating-a-container')
@@ -296,6 +319,9 @@ html
             pre.orange Backbone.Collections.fetch()
 
 
+      section(data-bespoke-hash='encryptr-demo')
+        h1.orange Encryptr  
+          span.white Demo
 
       section(data-bespoke-hash='thanks')
         h1.orange Thanks!
